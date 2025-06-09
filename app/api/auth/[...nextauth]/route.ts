@@ -34,7 +34,7 @@ const handler = NextAuth({
   callbacks: {
     async redirect({ url, baseUrl }) {
       // Use your server URL as baseUrl if not set
-      const serverUrl = process.env.NEXTAUTH_URL || "http://27.111.72.61:4003";
+      const serverUrl = process.env.NEXTAUTH_URL || baseUrl;
       const actualBaseUrl = baseUrl || serverUrl;
       
       // Ensures that redirects stay within the app
