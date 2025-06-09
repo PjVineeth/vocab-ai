@@ -29,19 +29,38 @@ const handler = NextAuth({
   ],
   pages: {
     signIn: '/',
-    error: '/', // Redirect to home page on error
+    error: '/auth/error', // Redirect to a dedicated error page
   },
   callbacks: {
     async redirect({ url, baseUrl }) {
-      // Use your server URL as baseUrl if not set
-      const serverUrl = process.env.NEXTAUTH_URL || baseUrl;
-      const actualBaseUrl = baseUrl || serverUrl;
+      // Prevent infinite redirect loops
+      if (url.includes('callbackUrl') && url.includes('error=OAuth')) {
+        return baseUrl;
+      }
       
-      // Ensures that redirects stay within the app
-      if (url.startsWith("/")) return `${actualBaseUrl}${url}`;
-      // Allow callback to same origin
-      if (new URL(url).origin === actualBaseUrl) return url;
-      return actualBaseUrl;
+      // Handle Render.com URLs
+      if (baseUrl.includes('.onrender.com')) {
+        return baseUrl;
+      }
+      
+      // If it's a relative URL, prepend the baseUrl
+      if (url.startsWith("/")) {
+        return `${baseUrl}${url}`;
+      }
+      
+      // If the URL is on the same origin, allow it
+      try {
+        const urlObj = new URL(url);
+        const baseUrlObj = new URL(baseUrl);
+        if (urlObj.origin === baseUrlObj.origin) {
+          return url;
+        }
+      } catch (error) {
+        console.error('Redirect URL parsing error:', error);
+      }
+      
+      // Default to baseUrl to prevent external redirects
+      return baseUrl;
     },
     async session({ session, token }) {
       if (session.user && token.sub) {
