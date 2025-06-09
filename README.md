@@ -17,7 +17,7 @@ A modern, responsive website for VocaB.AI, showcasing AI-powered analytics solut
   - Integrated AI services:
     - SARATHI-AI
     - CHITRA-AI
-    - Vocab Assist (AI Voice Chat)
+    - Vocab Assist (Currently under maintenance)
 
 ## 🛠️ Tech Stack
 
@@ -49,7 +49,6 @@ vocabai-website/
 ### Prerequisites
 
 - Node.js 18.x or later
-- Python 3.x (for Vocab Assist feature)
 - npm or yarn
 
 ### Installation
@@ -112,16 +111,10 @@ yarn dev
 - Business information display
 
 ### Vocab Assist
-- AI-powered voice chat interface
-- Real-time speech processing
-- Automatic server startup
-- Seamless integration with main website
+- Currently under maintenance
+- Feature temporarily disabled
 
-To use Vocab Assist:
-1. Log in to the website
-2. Navigate to Services
-3. Click on "Vocab Assist"
-4. The voice chat interface will automatically start
+Note: Vocab Assist is currently unavailable and will display a maintenance message when accessed.
 
 ## 📱 Mobile Customization & Responsiveness
 

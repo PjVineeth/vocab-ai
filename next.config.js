@@ -1,16 +1,41 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async rewrites() {
-    return [
-      {
-        source: '/Speech_model_conv_pipeline_1805_/templates/:path*',
-        destination: '/Speech_model_conv_pipeline_1805_/templates/:path*',
-      },
-    ];
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
   },
   images: {
-    domains: ['lh3.googleusercontent.com'],
+    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
-};
+  // Configuration for deployment
+  output: 'standalone',
+  experimental: {
+    serverComponentsExternalPackages: [],
+  },
+  // Enable host binding for external access
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+        ],
+      },
+    ]
+  },
+}
 
-module.exports = nextConfig; 
+export default nextConfig

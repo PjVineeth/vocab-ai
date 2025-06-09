@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+// Uncomment the line below if you want to use route-specific CORS instead of global middleware
+// import { withCors } from '@/lib/cors';
 
 export async function POST(request: Request) {
   try {
@@ -46,4 +48,15 @@ Message: ${message}
       { status: 500 }
     );
   }
+}
+
+// Alternative approach: Use route-specific CORS (uncomment if needed)
+// export const POST = withCors(async (request: NextRequest) => {
+//   // Your POST logic here
+//   return NextResponse.json({ message: 'Success' });
+// });
+
+// Handle OPTIONS requests explicitly if needed
+export async function OPTIONS() {
+  return new NextResponse(null, { status: 200 });
 } 

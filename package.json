@@ -2,10 +2,11 @@
   "name": "voabai-website",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -H 27.111.72.61 -p 4003",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -H 27.111.72.61 -p 4003",
     "lint": "next lint",
     "vercel-build": "npm install --legacy-peer-deps && next build"
   },

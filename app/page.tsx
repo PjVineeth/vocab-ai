@@ -6,6 +6,7 @@ import { useState, useEffect } from "react"
 import { teamMembers } from "./data/teamMembers"
 import GalleryCarousel from "./components/GalleryCarousel"
 import TeamCarousel from "./components/TeamCarousel"
+import ProfileImage from "./components/ProfileImage"
 import { signIn, signOut, useSession } from "next-auth/react"
 
 const navLinks = [
@@ -99,6 +100,8 @@ export default function Home() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -219,22 +222,9 @@ export default function Home() {
                       </li>
                       <li>
                         <a 
-                          href="#" 
-                          onClick={async (e) => {
-                            e.preventDefault();
-                            try {
-                              const response = await fetch('/api/start-server');
-                              const data = await response.json();
-                              if (data.success) {
-                                window.location.href = data.url;
-                              } else {
-                                alert('Failed to start Vocab Assist server');
-                              }
-                            } catch (error) {
-                              console.error('Error:', error);
-                              alert('Failed to start Vocab Assist server');
-                            }
-                          }}
+                          href="https://vocab-assist.onrender.com" 
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         >
                           Vocab Assist
@@ -255,18 +245,11 @@ export default function Home() {
                   onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
                   className="flex items-center space-x-2 focus:outline-none"
                 >
-                  <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-blue-600 bg-white flex items-center justify-center">
-                    {session.user?.image ? (
-                      <Image
-                        src={session.user.image}
-                        alt="Profile"
-                        fill
-                        className="object-cover"
-                      />
-                    ) : (
-                      <User className="w-8 h-8 text-blue-600" />
-                    )}
-                  </div>
+                  <ProfileImage
+                    src={session.user?.image}
+                    alt="Profile"
+                    className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-blue-600 bg-white flex items-center justify-center"
+                  />
                 </button>
                 
                 {/* Dropdown Menu */}
@@ -346,29 +329,16 @@ export default function Home() {
                   {isMobileServicesOpen && (
                     <ul className="pl-6">
                       <li>
-                        <a href="http://27.111.72.61:900" className="block px-3 py-1 text-sm text-gray-600 hover:text-primary">SARATHI-AI</a>
+                        <a href="http://27.111.72.61:9002" className="block px-3 py-1 text-sm text-gray-600 hover:text-primary">SARATHI-AI</a>
                       </li>
                       <li>
                         <a href="#chitra-ai" className="block px-3 py-1 text-sm text-gray-600 hover:text-primary">CHITRA-AI</a>
                       </li>
                       <li>
                         <a 
-                          href="#" 
-                          onClick={async (e) => {
-                            e.preventDefault();
-                            try {
-                              const response = await fetch('/api/start-server');
-                              const data = await response.json();
-                              if (data.success) {
-                                window.location.href = data.url;
-                              } else {
-                                alert('Failed to start Vocab Assist server');
-                              }
-                            } catch (error) {
-                              console.error('Error:', error);
-                              alert('Failed to start Vocab Assist server');
-                            }
-                          }}
+                          href="https://vocab-assist.onrender.com" 
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="block px-3 py-1 text-sm text-gray-600 hover:text-primary"
                         >
                           Vocab Assist
@@ -381,18 +351,12 @@ export default function Home() {
               <li className="border-t mt-2 pt-2 px-3 flex items-center">
                 {session ? (
                   <>
-                    <div className="relative w-8 h-8 rounded-full overflow-hidden border-2 border-blue-600 bg-white flex items-center justify-center mr-2">
-                      {session.user?.image ? (
-                        <Image
-                          src={session.user.image}
-                          alt="Profile"
-                          fill
-                          className="object-cover"
-                        />
-                      ) : (
-                        <User className="w-6 h-6 text-blue-600" />
-                      )}
-                    </div>
+                    <ProfileImage
+                      src={session.user?.image}
+                      alt="Profile"
+                      className="relative w-8 h-8 rounded-full overflow-hidden border-2 border-blue-600 bg-white flex items-center justify-center mr-2"
+                      fallbackSize="w-6 h-6"
+                    />
                     <span className="text-sm mr-2 truncate max-w-[100px]">{session.user?.name || 'Profile'}</span>
                     <button
                       onClick={() => { signOut(); setIsMobileMenuOpen(false); }}
@@ -419,6 +383,8 @@ export default function Home() {
       <div className={`pt-[86px] transition-all duration-300 ${
         isScrolled ? 'pt-[70px]' : 'pt-[86px]'
       }`}>
+        
+
         {/* Hero Section */}
         <section id="home" className="relative bg-gradient-to-b from-blue-50 to-white">
           <div className="container mx-auto px-4 md:px-20">
