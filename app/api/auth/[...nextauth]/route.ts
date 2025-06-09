@@ -33,11 +33,15 @@ const handler = NextAuth({
   },
   callbacks: {
     async redirect({ url, baseUrl }) {
+      // Use your server URL as baseUrl if not set
+      const serverUrl = process.env.NEXTAUTH_URL || "http://27.111.72.61:4003";
+      const actualBaseUrl = baseUrl || serverUrl;
+      
       // Ensures that redirects stay within the app
-      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      if (url.startsWith("/")) return `${actualBaseUrl}${url}`;
       // Allow callback to same origin
-      if (new URL(url).origin === baseUrl) return url;
-      return baseUrl;
+      if (new URL(url).origin === actualBaseUrl) return url;
+      return actualBaseUrl;
     },
     async session({ session, token }) {
       if (session.user && token.sub) {
